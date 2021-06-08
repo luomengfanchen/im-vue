@@ -11,9 +11,8 @@ export default {
 </script>
 
 <style scoped>
-* {
-    padding: 0px;
-    margin: 0px;
+#app {
+    background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
     height: 100%;
     width: 100%;
 }
