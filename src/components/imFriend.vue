@@ -2,7 +2,7 @@
     <div class="im-friend">
         <!--  自己的头像与姓名 -->
         <div class="userbox">
-            <p class="nickname">{{ user.name }}</p>
+            <p class="nickname">{{ $store.getters.getUser.name }}</p>
         </div>
         <!--  列表渲染好友列表 -->
         <div class="friend-list" v-for="friend in friendList" :key="friend.id">

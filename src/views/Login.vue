@@ -12,6 +12,7 @@
                     name="email"
                     class="input"
                     placeholder="请输入邮箱"
+                    v-model="email"
                 />
             </div>
 
@@ -19,20 +20,45 @@
                 <label for="passwd">密码</label>
                 <input
                     type="password"
-                    name="passwd"
+                    name="password"
                     class="input"
                     placeholder="请输入密码"
+                    v-model="password"
                 />
             </div>
 
-            <input type="button" value="登陆" id="submit" />
+            <input type="button" value="登陆" id="submit" @click="login" />
         </form>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'Login'
+    name: 'Login',
+    data() {
+        return {
+            email: '',
+            password: ''
+        }
+    },
+    methods: {
+        login: function() {
+            this.axios
+                .post('/api/login?username=' + this.email + '&password=' + this.password)
+                .then((response) => {
+                    console.log(response.data)
+                    window.sessionStorage.setItem('email', response.data.email)
+                    window.sessionStorage.setItem('name', response.data.name)
+                    this.$store.dispatch('asynctUser', response.data)
+                    this.$router.push('/')
+                })
+                .catch((error) => {
+                    console.log(error)
+                    alert('账号或密码输入错误')
+                }
+                )
+        }
+    }
 }
 </script>
 
