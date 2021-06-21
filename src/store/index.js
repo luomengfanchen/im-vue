@@ -6,12 +6,16 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         user: {},
+        friend: 0,
         friendList: [],
         chatList: []
     },
     getters: {
         getUser: (state) => {
             return state.user
+        },
+        getFriend: (state) => {
+            return state.friend
         },
         getFriendlist: (state) => {
             return state.friendList
@@ -24,6 +28,9 @@ export default new Vuex.Store({
         setUser: (state, u) => {
             state.user = u
         },
+        setFriend: (state, f) => {
+            state.friend = f
+        },
         setFriendlist: (state, a) => {
             state.friendList = a
         },
@@ -34,6 +41,9 @@ export default new Vuex.Store({
     actions: {
         asynctUser: (context, u) => {
             context.commit('setUser', u)
+        },
+        asyncFriend: (context, f) => {
+            context.commit('setFriend', f)
         },
         asyncFriendlist: (context, a) => {
             context.commit('setFriendlist', a)

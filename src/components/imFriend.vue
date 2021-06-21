@@ -5,10 +5,10 @@
             <p class="nickname">{{ $store.getters.getUser.name }}</p>
         </div>
         <!--  列表渲染好友列表 -->
-        <div class="friend-list" v-for="friend in friendList" :key="friend.id">
-            <div class="friend" @click="chat(friend.id)">
+        <div class="friend-list" v-for="friend in friendlist" :key="friend.Uid" @click="getMsg(friend.Uid)">
+            <div class="friend">
                 <div class="friend-name">
-                    <p>{{ friend.name }}</p>
+                    <p>{{ friend.Name }}</p>
                 </div>
             </div>
         </div>
@@ -20,20 +20,33 @@ export default {
     name: 'imFriend',
     data() {
         return {
-            user: {
-                name: "MyUser"
-            },
-            friendList: [
-                { id: 1, name: 'alpha' },
-                { id: 2, name: 'beta' },
-                { id: 3, name: 'aaa' }
-            ]
+            friendlist: []
         }
     },
-    methods: {
-        chat: (e) => {
-            alert(e)
+    methods : {
+        getMsg : function (id) {
+            this.axios
+                .get('api/chatlist?uid=' + this.$store.getters.getUser.uid + '&fid=' + id)
+                .then((response) => {
+                    this.$store.dispatch('asyncFriend', id)
+                    this.$store.dispatch('asyncChatlist', response.data.data)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         }
+    },
+    mounted() {
+        this.axios
+            .get('api/friend?id=' + this.$store.getters.getUser.uid)
+            .then((response) => {
+                this.friendlist = response.data.data
+                // 存储数据
+                this.$store.dispatch('asyncFriendlist', response.data.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 }
 </script>

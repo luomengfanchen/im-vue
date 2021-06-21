@@ -1,15 +1,35 @@
 <template>
     <div class="im-send">
         <div class="sendbar">
-            <input type="text" name="input" class="send-input" />
-            <input type="button" class="send-btn" value="发送" />
+            <input type="text" name="input" class="send-input" v-model="msg" />
+            <input type="button" class="send-btn" value="发送" @click="sendMsg" />
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'imSend'
+    name: 'imSend',
+    data() {
+        return {
+            msg : ''
+        }
+    },
+    methods: {
+        sendMsg : function() {
+            this.axios
+                .post('api/chat', {sendId: this.$store.getters.getUser.uid, recvId: this.$store.getters.getFriend, msg: this.msg})
+                .then(() => {
+                    window.alert('发送成功!')
+                })
+                .catch(() => {
+                    window.alert('发送失败!!!')
+                })
+                .then(() => {
+                    this.msg = ''
+                })
+        }
+    }
 }
 </script>
 
