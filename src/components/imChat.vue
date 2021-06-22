@@ -18,6 +18,12 @@
 <script>
 export default {
     name: 'imChat',
+    mounted() {
+        let chatbar = document.getElementsByClassName('chatbar')[0]
+        window.setInterval(() => {
+            chatbar.scrollTop = chatbar.scrollHeight + 300
+        }, 100)
+    }
 }
 </script>
 
